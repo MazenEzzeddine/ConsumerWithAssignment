@@ -61,16 +61,15 @@ public class ConsumerThread implements  Runnable {
         log.info(KafkaConsumerConfig.class.getName() + ": {}", config.toString());
         Properties props = KafkaConsumerConfig.createProperties(config);
 
-       /* props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
+        props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
                 StickyAssignor.class.getName());
-*/
 
-    /*    props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
+/*        props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
                 RangeAssignor.class.getName());*/
 
 
-        props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
-                BinPackPartitionAssignor.class.getName());
+ /*       props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
+                BinPackPartitionAssignor.class.getName());*/
 
         consumer = new KafkaConsumer<>(props);
         consumer.subscribe(Collections.singletonList(config.getTopic()), new RebalanceListener());

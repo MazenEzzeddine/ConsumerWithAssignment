@@ -16,12 +16,12 @@ public class RebalanceListener implements ConsumerRebalanceListener {
 
     @Override
     public void onPartitionsRevoked(Collection<TopicPartition> collection) {
-      /*  try {
+        try {
             log.info("Sleeping on rebalancing");
-            Thread.sleep(0);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
+        }
 
         log.info(" Rebalancing started");
         rebalanceStartTime = System.currentTimeMillis(); //Instant.now();
