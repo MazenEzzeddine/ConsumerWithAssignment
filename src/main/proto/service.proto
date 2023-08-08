@@ -23,8 +23,6 @@ message ArrivalRequest {
 
 
 
-
-
 message RateResponse {
   float rate =1;
 }

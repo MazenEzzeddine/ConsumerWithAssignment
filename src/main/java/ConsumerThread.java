@@ -14,23 +14,14 @@ import java.util.Properties;
 
 
 public class ConsumerThread implements  Runnable {
-
     private static final Logger log = LogManager.getLogger(Consumer.class);
     public static KafkaConsumer<String, Customer> consumer = null;
     static double eventsViolating = 0;
     static double eventsNonViolating = 0;
     static double totalEvents = 0;
     static float latency;
-
     static Double maxConsumptionRatePerConsumer1 = 0.0d;
-
-
-
-
-
     public static void main(String[] args) {
-
-
     }
 
 
@@ -56,31 +47,23 @@ public class ConsumerThread implements  Runnable {
 
     @Override
     public void run() {
-
         KafkaConsumerConfig config = KafkaConsumerConfig.fromEnv();
         log.info(KafkaConsumerConfig.class.getName() + ": {}", config.toString());
         Properties props = KafkaConsumerConfig.createProperties(config);
-
         props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
                 StickyAssignor.class.getName());
-
-/*        props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
-                RangeAssignor.class.getName());*/
-
-
- /*       props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
+    /*    props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
+                RangeAssignor.class.getName());
+*/
+/*
+        props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
                 BinPackPartitionAssignor.class.getName());*/
-
         consumer = new KafkaConsumer<>(props);
         consumer.subscribe(Collections.singletonList(config.getTopic()), new RebalanceListener());
         log.info("Subscribed to topic {}", config.getTopic());
-
         addShutDownHook();
         // PrometheusUtils.initPrometheus();
-
         //startServer();
-
-
         try {
             while (true) {
                 ConsumerRecords<String, Customer> records = consumer.poll
@@ -88,7 +71,6 @@ public class ConsumerThread implements  Runnable {
                 //max = 0;
                 if (records.count() != 0) {
                     log.info("received {}", records.count());
-
                     for (ConsumerRecord<String, Customer> record : records) {
                         totalEvents++;
                         //TODO sleep per record or per batch
